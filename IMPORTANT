@@ -1,0 +1,37 @@
+//imports
+@TeleOp
+public class 2022TeleOp extends LinearOpMode()
+{
+    //Vars
+    private DcMotor left;
+    private DcMotor right;
+    private DcMotor slide;
+    private Servo intake;
+
+    //IMPORTANT!
+    waitForStart();
+
+    public void runOpMode()
+    {
+        //Hardware maps
+        left = left.hardwareMap.set(DcMotor.class, “left”);
+        right = right.hardwareMap.set(DcMotor.class, “right”);  
+        intake = intake.hardwareMap.set(Servo.class, “intake”);
+        slide = slide.hardwareMap.set(DcMotor.class, “slide”);
+
+        //Controls
+        left.setPower(gamepad1.left_stick_y);
+        right.setPower(gamepad1.right_stick_y);
+        if (gamepad1.left_bumper){
+            slide.setMode(STOP_AND_RESET_ENCODERS);
+            slide.setTargetPosition(700 * countsPerWheelRev);
+            slide.setMode(RUN_TO_POSITION);
+            slide.setPower(1.0);
+        }
+        if (gamepad1.a === “true”){
+            intake.setPosition(0);
+        } else {
+            intake.setPosition(0.6);
+        }
+     }
+}
